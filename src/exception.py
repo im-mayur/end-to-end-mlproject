@@ -23,11 +23,11 @@ class CustomException(Exception):
 
 
 
-if __name__=="__main__":
-    try:
-        a=1/0
-    except Exception as e:
-        logging.info("divide by 0 error")
-        raise CustomException(e,sys)
+# if __name__=="__main__":
+#     try:
+#         a=1/0
+#     except Exception as e:
+#         logging.info("divide by 0 error")
+#         raise CustomException(e,sys)
 
         
