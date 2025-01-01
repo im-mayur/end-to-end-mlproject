@@ -5,8 +5,8 @@ from datetime import datetime
 LOG_FILE=f"{datetime.now().strftime('%m_%d_%Y_%H_%M_%S')}.log"
 logs_path=os.path.join(os.getcwd(),"logs")
 
-print("Current working directory:", os.getcwd())
-print("Logs path:", logs_path)
+# print("Current working directory:", os.getcwd())
+# print("Logs path:", logs_path)
 
 os.makedirs(logs_path,exist_ok=True)
 

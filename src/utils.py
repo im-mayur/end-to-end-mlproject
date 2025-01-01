@@ -7,6 +7,7 @@ import pandas as pd
 from src.exception import CustomException
 
 from sklearn.metrics import r2_score
+from sklearn.model_selection import GridSearchCV
 
 def save_object(file_path, obj):
     try:
@@ -20,13 +21,21 @@ def save_object(file_path, obj):
     
 
 
-def evaluate_models(X_train, y_train, X_test, y_test, models):
+def evaluate_models(X_train, y_train, X_test, y_test, models, params):
     try:
         report ={}
+        print('length of models and params',len(models), len(params))
+        for i, model_name in  enumerate(models.keys()):
+            model = models[model_name]
+            params = params.get(model_name, {})
+            
 
-        for i in range(len(models)):
-            model = list(models.values())[i]
+            # model.fit(X_train, y_train)
+            if params:
+                gs = GridSearchCV(model, params, cv=3, n_jobs=-1,)
+                gs.fit(X_train, y_train)
 
+                model.set_params(**gs.best_params_)
             model.fit(X_train, y_train)
 
             y_train_pred = model.predict(X_train)
@@ -36,6 +45,7 @@ def evaluate_models(X_train, y_train, X_test, y_test, models):
             test_model_score = r2_score(y_test, y_test_pred) 
 
             report[list(models.keys())[i]] = test_model_score  
+        
 
         return report
 
